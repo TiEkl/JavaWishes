@@ -13,9 +13,10 @@ class SteamWishlistTest {
     void populateWishlistWithTagsTest() throws IOException, InterruptedException {
         var tags = new HashSet<String>();
         tags.add("Politics");
+        tags.add("Grand Strategy");
         var steamlist = new SteamWishlist("steamlist", tags, "76561197985090074");
         steamlist.populateWishlist();
-        int expected = 1;
+        int expected = 2;
         int actual = steamlist.getGames().size();
         assertEquals(expected, actual);
     }

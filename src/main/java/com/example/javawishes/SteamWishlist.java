@@ -32,13 +32,8 @@ public class SteamWishlist extends Wishlist {
     }
 
     public void populateWishlist() throws IOException, InterruptedException {
-        var steamUrl = String.format(steamBaseUrl, steamID);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(URI.create(steamUrl))
-                                .header("Accept", "application/json")
-                                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        var json = new JSONObject(response.body());
+
+        var json = fetchSteamWishlist();
         Iterator<String> keys = json.keys();
 
         while(keys.hasNext()) {
@@ -51,17 +46,14 @@ public class SteamWishlist extends Wishlist {
 
                 if(current.get("tags") instanceof JSONArray) {
                     JSONArray jsontags = current.getJSONArray("tags");
-
                     for(int i = 0; i < jsontags.length(); i++) {
                         tags.add(jsontags.getString(i));
                     }
                 }
                 if(tags.size() > 0) {
-
                     if(current.get("name") instanceof String) {
                         gameName = (String) current.get("name");
                     }
-
                     if(current.get("subs") instanceof JSONArray) {
                         JSONArray subs = current.getJSONArray("subs");
                         if(subs.length() > 0) {
@@ -77,6 +69,16 @@ public class SteamWishlist extends Wishlist {
                 super.games.add(new Game(gameName, price, tags));
             }
         }
+    }
+
+    private JSONObject fetchSteamWishlist() throws IOException, InterruptedException {
+        var steamUrl = String.format(steamBaseUrl, steamID);
+        var client = HttpClient.newHttpClient();
+        var request = HttpRequest.newBuilder(URI.create(steamUrl))
+                .header("Accept", "application/json")
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return new JSONObject(response.body());
     }
 
     public String getSteamID() {
