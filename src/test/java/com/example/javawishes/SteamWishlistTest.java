@@ -26,7 +26,7 @@ class SteamWishlistTest {
 
         var steamlist = new SteamWishlist("steamlist", "76561197985090074");
         steamlist.populateWishlist();
-        int expected = 94;
+        int expected = 95;
         int actual = steamlist.getGames().size();
         assertEquals(expected, actual);
     }

@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
+
 public class SteamWishlist extends Wishlist {
     String steamID;
     Set<String> tags;
@@ -73,12 +74,7 @@ public class SteamWishlist extends Wishlist {
 
     private JSONObject fetchSteamWishlist() throws IOException, InterruptedException {
         var steamUrl = String.format(steamBaseUrl, steamID);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(URI.create(steamUrl))
-                .header("Accept", "application/json")
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return new JSONObject(response.body());
+        return httpUtil.getObjectReq(steamUrl);
     }
 
     public String getSteamID() {
