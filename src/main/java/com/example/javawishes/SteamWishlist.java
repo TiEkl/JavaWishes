@@ -66,7 +66,7 @@ public class SteamWishlist extends Wishlist {
                 }
             }
             if(this.tags == null || !Collections.disjoint(this.tags, tags)) {
-                super.games.add(new Game(gameName, price, tags));
+                super.games.add(new Game(gameName, tags, price, Integer.parseInt(key)));
             }
         }
     }

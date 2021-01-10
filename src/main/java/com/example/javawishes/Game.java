@@ -8,6 +8,9 @@ public class Game {
     String name;
     ArrayList<String> tags;
     float price;
+    int steamID;
+
+
 
     public Game(String name, float price) {
         this.name = name;
@@ -16,6 +19,13 @@ public class Game {
 
     public Game(String name, float price, ArrayList<String> tags) {
         this.name = name;
+        this.tags = tags;
+        this.price = price;
+    }
+
+    public Game(String name, ArrayList<String> tags, float price, int steamID) {
+        this.name = name;
+        this.steamID = steamID;
         this.tags = tags;
         this.price = price;
     }
